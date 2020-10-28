@@ -27,12 +27,12 @@ export class BookComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchKey: string;
-  saveBookForm:FormGroup;
-
+  saveUpdateBookForm:FormGroup;
+  status: string;
   
   ngOnInit() {
 
-this.saveBookForm =new FormGroup({
+this.saveUpdateBookForm =new FormGroup({
       id:new FormControl(null,[
         Validators.required,
         Validators.minLength(0)
@@ -70,6 +70,10 @@ this.saveBookForm =new FormGroup({
         Validators.minLength(0)
       ]),
       
+      status:new FormControl(null,[
+      
+        Validators.minLength(0)
+      ]),
     })
 
 
@@ -98,13 +102,30 @@ onSearchClear(){
 
   
   onSave() {
-    console.log(this.saveBookForm.value);
-    this.bookService.saveBook(this.saveBookForm.value).subscribe(
+    console.log(this.saveUpdateBookForm.value);
+    this.bookService.saveBook(this.saveUpdateBookForm.value).subscribe(
       response => console.log('success!', response),
       error => console.log('error!', error)
     );
 
     location.reload();
+  }
+
+  onClickUpdate(row) {
+    this.saveUpdateBookForm.setValue(row);
+    this.status = row.status;
+  }
+
+
+
+  onUpdate() {
+   
+    this.bookService.updateBook(this.saveUpdateBookForm.value,this.saveUpdateBookForm.controls['id'].value).subscribe(
+      response => console.log('success!', response),
+      error => console.log('error!', error)
+    );
+
+    
   }
 
 }

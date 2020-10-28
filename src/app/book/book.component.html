@@ -73,7 +73,7 @@
             <ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef>ACTION</mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                    <button mat-icon-button><mat-icon>launch</mat-icon></button>
+                    <button mat-icon-button data-toggle="modal" data-target="#update_modal" (click)="onClickUpdate(row)"><mat-icon>launch</mat-icon></button>
                     <button mat-icon-button color="warn"><mat-icon>delete_outline</mat-icon></button>
                 </mat-cell>
             </ng-container>
@@ -106,7 +106,7 @@
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-        <form  [formGroup]="saveBookForm" (ngSubmit)="onSave()">
+        <form  [formGroup]="saveUpdateBookForm" (ngSubmit)="onSave()">
             <div class="row mb-3">
                 <div class="col ">
                     <input type="text" class="form-control" placeholder="Book ID" formControlName="id">
@@ -161,6 +161,73 @@
     </div>
 </div>
 
+
+<!-- update modal -->
+<div class="modal fade " id="update_modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="update_modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Update Book</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="saveUpdateBookForm" (ngSubmit)="onUpdate()">
+                    <div class="row mb-3">
+                        <div class="col ">
+                            <input type="text" class="form-control" placeholder="Book ID" formControlName="id">
+                        </div>
+                        <div class="col ">
+                            <input type="text" class="form-control" placeholder="Name" formControlName="name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col ">
+                            <input type="text" class="form-control" placeholder="Writer" formControlName="writer">
+                        </div>
+                        <div class="col ">
+                            <input type="number" class="form-control" placeholder="Price" formControlName="price">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col ">
+
+                            <input type="text" class="form-control" placeholder="Publisher Name"
+                                formControlName="publisher_name">
+                        </div>
+                        <div class="col ">
+                            <input type="text" class="form-control" placeholder="Received Way"
+                                formControlName="received_way">
+
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col ">
+                            <label>Published Date</label>
+                            <input type="date" class="form-control" formControlName="published_date">
+                        </div>
+                        <div class="col ">
+                            <label>Received Date</label>
+                            <input type="date" class="form-control" formControlName="received_date">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col ">
+                            <input type="text" formControlName="category" class="form-control" placeholder="Category">
+                        </div>
+                        <div class="col ">
+                            <button mat-raised-button color="primary" style="width: 100%;" type="submit">UPDATE</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 </main-nav>

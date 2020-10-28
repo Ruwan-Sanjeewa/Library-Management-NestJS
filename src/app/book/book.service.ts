@@ -34,6 +34,17 @@ export class BookService{
 
     }
 
+    updateBook(updateData, id) {
+        
+        let token = localStorage.getItem('blog-token');
+    
+        const headers = new HttpHeaders({
+            'Authorization':`Bearer ${token}`
+        });
+        return this.http.put<any>('http://localhost:3000/books/'+ id,updateData,{headers:headers})
+
+    }
+
     
 
 }
