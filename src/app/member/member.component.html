@@ -1,0 +1,276 @@
+<main-nav>
+  <div class="container-fluid">
+    <div class="row nav">
+
+      <div class="col-lg-12 col-md-12">
+        <div class="search-div">
+          <button mat-raised-button (click)="onClickCreate(create_content)">
+            <mat-icon>add</mat-icon>Create
+          </button>
+          <mat-form-field class="search-form-field" floatLabel="never">
+            <input matInput [(ngModel)]="searchKey" placeholder="Search" autocmplete="off" (keyup)="applyFilter()">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+
+        <div class="mat-elevation-z8 col-lg-12 col-md-12 col-sm-12">
+          <mat-table matTableExporter [dataSource]="listMember" matSort #exporter="matTableExporter">
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="registration_no">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Registration Number</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.registration_no}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="course">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Course</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.course}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="course_year">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Course Year</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.course_year}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="registered_date">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Registered Date</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.registered_date}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="address">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Member Address</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.address}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="guarantee_name">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Guarantee Name</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.guarantee_name}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="guarantee_address">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Guarantee Address</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.guarantee_address}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.status}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef>ACTION</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="onClickUpdate(row,update_content)">
+                  <mat-icon>launch</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="onClickDelete(row,delete_content)">
+                  <mat-icon>delete_outline</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[5,10,25,100]" pageSize="5" showFirstLastOptions></mat-paginator>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="row nav">
+      <div class="col-lg-6 col-md-10 col-sm-10">
+        <button mat-raised-button color="warn" (click)="exporter.exportTable('xlsx')" class="dwn">Download
+          Data</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ngb-create_modal -->
+  <ng-template #create_content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="create_modal">Create Member</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()" (click)="onModalClose()">
+
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="saveUpdateMemberForm" (ngSubmit)="onSave()">
+        <div class="row mb-3">
+          <div class="col ">
+            <input type="text" class="form-control" placeholder="Member ID" formControlName="id" ngbAutofocus>
+          </div>
+          <div class="col ">
+            <input type="text" class="form-control" placeholder="Registration Number" formControlName="registration_no">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col ">
+            <input type="text" class="form-control" placeholder="Name" formControlName="name">
+          </div>
+          <div class="col ">
+            <input type="text" class="form-control" placeholder="Course" formControlName="course">
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col ">
+            <input type="number" class="form-control" placeholder="Course Year" formControlName="course_year">
+          </div>
+
+          <div class="col ">
+            <input type="text" class="form-control" formControlName="address" placeholder="Address">
+          </div>
+
+          <!-- here -->
+
+        </div>
+
+        <div class="row mb-3">
+          <div class="col ">
+            <input type="text" class="form-control" formControlName="guarantee_name" placeholder="Guarantee Name">
+          </div>
+
+          <div class="col ">
+            <input type="text" formControlName="guarantee_address" class="form-control" placeholder="Guarantee Address">
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col ">
+            <label> Member Registered Date </label>
+            <input type="date" class="form-control" formControlName="registered_date">
+
+          </div>
+
+
+
+          <div class="col create_modal_btn_group">
+
+            <button mat-raised-button color="primary" type="submit">CREATE</button>
+            <button mat-raised-button type="button" class="clr_btn" (click)="onClear()">CLEAR</button>
+
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+  </ng-template>
+
+
+  <!-- ngb-update_modal -->
+  <ng-template #update_content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="update_modal">Update Member</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()" (click)="onModalClose()">
+
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="saveUpdateMemberForm" (ngSubmit)="onUpdate()">
+        <div class="row mb-3">
+          <div class="col ">
+            <label>Member ID</label>
+            <input type="text" class="form-control" formControlName="id" disabled>
+          </div>
+          <div class="col ">
+            <label>Registration Number</label>
+            <input type="text" class="form-control" formControlName="registration_no" ngbAutofocus>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col ">
+            <label>Name</label>
+            <input type="text" class="form-control" formControlName="name">
+          </div>
+          <div class="col ">
+            <label>Course</label>
+            <input type="text" class="form-control" formControlName="course">
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col ">
+            <label>Course Year</label>
+            <input type="number" class="form-control" formControlName="course_year">
+          </div>
+          <div class="col ">
+            <label>Registered Date</label>
+            <input type="date" class="form-control" formControlName="registered_date">
+
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col ">
+            <label> Member Address</label>
+            <input type="text" class="form-control" formControlName="address">
+          </div>
+          <div class="col ">
+            <label>Guarantee Name</label>
+            <input type="text" class="form-control" formControlName="guarantee_name">
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col ">
+            <label>Guarantee Address</label>
+            <input type="text" formControlName="guarantee_address" class="form-control">
+          </div>
+
+          <div class="col ">
+            <label>Status</label>
+            <input type="text" formControlName="status" class="form-control" disabled>
+          </div>
+
+
+        </div>
+
+        <div class="row mb-3">
+          <div class="col ">
+
+            <button mat-raised-button color="primary" style="width: 100%;" type="submit">UPDATE</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+  </ng-template>
+
+
+  <!-- ngb-delete_modal -->
+  <ng-template #delete_content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="delete_modal">Delete Member</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()" (click)="onModalClose()">
+
+      </button>
+    </div>
+    <div class="modal-body">
+      If you delete this Member, it will also delete all reocrds in lending about this Member. Are you sure you want to
+      delete
+      this Member?
+    </div>
+    <div class="modal-footer">
+
+      <button type="button" class="btn btn-danger" (click)="onDelete()" (click)="modal.close()">Yes</button>
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" ngbAutofocus>No</button>
+    </div>
+  </ng-template>
+</main-nav>

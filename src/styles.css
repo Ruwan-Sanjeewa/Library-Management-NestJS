@@ -7,3 +7,13 @@ body{
 mat-icon{
 font-family: 'Material Icons' !important;
 }
+
+ .error.mat-snack-bar-container{
+     background:#cc0000 ;
+     color: white;
+ }
+
+ .success.mat-snack-bar-container{
+     background:green ;
+     color: white;
+ }

@@ -8,7 +8,6 @@
   background: #ebf5fc !important;
 }
 
-
 .search-div{
   margin-top: 70px;
 }
@@ -78,4 +77,9 @@ input:focus {
 
 .closeIcon{
   font-size: large;
+}
+
+.create_modal_btn_group{
+  margin-top: 25px;
+
 }

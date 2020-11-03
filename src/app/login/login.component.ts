@@ -4,6 +4,7 @@ import { LoginService } from './login.service';
 import { User } from './user';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   errorMsg:true;
   
   constructor(private loginservice:LoginService,
-    private router:Router) { }
+    private router:Router, private snackBar:MatSnackBar) { }
 
   ngOnInit() {
     this.loginForm =new FormGroup({
@@ -41,7 +42,21 @@ export class LoginComponent implements OnInit {
       map(token => this.router.navigate(['home']))
     ).subscribe(
       data => console.log(data),
-      error => this.errorHandling(error.status)
+      error => {
+    
+          this.snackBar.open('Invalid Credentials', '', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+            panelClass: 'error'
+          });
+      
+
+          
+      
+      
+      
+      }
       )
     
   }

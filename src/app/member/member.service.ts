@@ -1,61 +1,53 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { map, catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { Book } from './book';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Injectable()
-export class BookService{
+export class MemberService{
 
-    constructor(private http:HttpClient){
+    constructor (private http:HttpClient){}
 
-    }
-
-   
-    getAllBooks(){
+getAllMembers(){
         let token = localStorage.getItem('blog-token');
     
         const headers = new HttpHeaders({
             'Authorization':`Bearer ${token}`
         });
         
-        return this.http.get('http://localhost:3000/books', { headers: headers });
+        return this.http.get('http://localhost:3000/members', { headers: headers });
         
     }
 
-    saveBook(bookData) {
+    saveMember(memberData) {
         let token = localStorage.getItem('blog-token');
     
         const headers = new HttpHeaders({
             'Authorization':`Bearer ${token}`
         });
-        return this.http.post<any>('http://localhost:3000/books',bookData,{headers:headers})
+        return this.http.post<any>('http://localhost:3000/members',memberData,{headers:headers})
 
     }
 
-    updateBook(updateData, id) {
-        
-        let token = localStorage.getItem('blog-token');
-    
-        const headers = new HttpHeaders({
-            'Authorization':`Bearer ${token}`
-        });
-        return this.http.put<any>('http://localhost:3000/books/'+ id,updateData,{headers:headers})
-
-    }
-
-     deleteBook(id) {
+    updateMember(updateData, id) {
         
         let token = localStorage.getItem('blog-token');
     
         const headers = new HttpHeaders({
             'Authorization':`Bearer ${token}`
         });
-        return this.http.delete<any>('http://localhost:3000/books/'+ id,{headers:headers})
+        return this.http.put<any>('http://localhost:3000/members/'+ id,updateData,{headers:headers})
 
     }
 
+     deleteMember(id) {
+        
+        let token = localStorage.getItem('blog-token');
     
+        const headers = new HttpHeaders({
+            'Authorization':`Bearer ${token}`
+        });
+        return this.http.delete<any>('http://localhost:3000/members/'+ id,{headers:headers})
+
+    }
+
 
 }

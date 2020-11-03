@@ -21,10 +21,15 @@ import {MatInputModule,MatButtonModule,
         MatCardModule,
         MatTableModule,
         MatSortModule,
-        MatPaginatorModule
+  MatPaginatorModule,
+        MatSnackBarModule
         } from '@angular/material';
 
 import { MatTableExporterModule } from 'mat-table-exporter';
+import {NgbPaginationModule, NgbAlertModule,NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
+import { MemberComponent } from './member/member.component';
+import { MemberService } from './member/member.service';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +38,7 @@ import { MatTableExporterModule } from 'mat-table-exporter';
     BookComponent,
     HomeComponent,
     MainNavComponent,
+    MemberComponent,
     
     
   ],
@@ -55,13 +61,11 @@ import { MatTableExporterModule } from 'mat-table-exporter';
     MatSortModule,
     MatPaginatorModule,
     MatIconModule,
-    MatTableExporterModule
-    
-    
-  
-  
+    MatTableExporterModule,
+    MatSnackBarModule,
+ NgbPaginationModule, NgbAlertModule,NgbModalModule.forRoot()
   ],
-  providers: [BookService],
+  providers: [BookService,MemberService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

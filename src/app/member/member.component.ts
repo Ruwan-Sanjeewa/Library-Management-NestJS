@@ -1,38 +1,41 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { BookService } from './book.service';
-import { MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
-import {  FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-@Component({
-  selector: 'book',
-  templateUrl: './book.component.html',
-  styleUrls: ['./book.component.css']
-})
-export class BookComponent implements OnInit {
+import { MemberService } from './member.service';
 
-  
-  constructor(private bookService: BookService, private changeDetectorRefs: ChangeDetectorRef,
+@Component({
+  selector: 'member',
+  templateUrl: './member.component.html',
+  styleUrls: ['./member.component.css']
+})
+export class MemberComponent implements OnInit {
+
+ constructor(private memberService: MemberService, private changeDetectorRefs: ChangeDetectorRef,
      private snackBar:MatSnackBar,private modalService: NgbModal) { }
 
-  public bookdata = [];
+  public memberData = [];
   
-  listBook: MatTableDataSource<any>;  
-  displayedColumns: string[] = ['id', 'name', 'writer', 'price','category', 'published_date', 'publisher_name', 'received_way','received_date','status','action'];
+  listMember: MatTableDataSource<any>;  
+  displayedColumns: string[] = ['id', 'registration_no', 'name', 'course','course_year', 'registered_date', 'address', 'guarantee_name','guarantee_address','status','action'];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   searchKey: string;
-  saveUpdateBookForm:FormGroup;
+  saveUpdateMemberForm:FormGroup;
   deleteRowId: string;
 
 
   ngOnInit() {
 
-this.saveUpdateBookForm =new FormGroup({
+this.saveUpdateMemberForm =new FormGroup({
       id:new FormControl(null,[
+        Validators.required,
+        Validators.minLength(0)
+      ]),
+      registration_no:new FormControl(null,[
         Validators.required,
         Validators.minLength(0)
       ]),
@@ -40,49 +43,47 @@ this.saveUpdateBookForm =new FormGroup({
         Validators.required,
         Validators.minLength(0)
       ]),
-      writer:new FormControl(null,[
+      course:new FormControl(null,[
         Validators.required,
         Validators.minLength(0)
       ]),
-      price:new FormControl(null,[
+      course_year:new FormControl(null,[
         Validators.required,
         Validators.minLength(0)
       ]),
-      category:new FormControl(null,[
+      registered_date:new FormControl(null,[
         Validators.required,
         Validators.minLength(0)
       ]),
-      publisher_name:new FormControl(null,[
+      address:new FormControl(null,[
         Validators.required,
         Validators.minLength(0)
       ]),
-      published_date:new FormControl(null,[
+      guarantee_name:new FormControl(null,[
         Validators.required,
         Validators.minLength(0)
       ]),
-      received_way:new FormControl(null,[
+      guarantee_address:new FormControl(null,[
         Validators.required,
         Validators.minLength(0)
       ]),
-      received_date:new FormControl(null,[
+
+       status:new FormControl(null,[
         Validators.required,
         Validators.minLength(0)
       ]),
       
-  status: new FormControl(null,[
-      
-        Validators.minLength(0)
-      ]),
+ 
     })
 
 
-    this.bookService.getAllBooks().subscribe(
+    this.memberService.getAllMembers().subscribe(
       (data) => {
-        this.bookdata = Array.from(Object.keys(data), k => data[k]);
+        this.memberData = Array.from(Object.keys(data), k => data[k]);
         
-        this.listBook = new MatTableDataSource(this.bookdata);
-        this.listBook.sort = this.sort;
-        this.listBook.paginator = this.paginator;
+        this.listMember = new MatTableDataSource(this.memberData);
+        this.listMember.sort = this.sort;
+        this.listMember.paginator = this.paginator;
       }
         
     )
@@ -96,19 +97,19 @@ onSearchClear(){
 }
  
   applyFilter() {
-    this.listBook.filter = this.searchKey.trim().toLowerCase();
+    this.listMember.filter = this.searchKey.trim().toLowerCase();
     
 }
 
   
   refreshTable() {
-    this.bookService.getAllBooks().subscribe(
+    this.memberService.getAllMembers().subscribe(
       (data) => {
-        this.bookdata = Array.from(Object.keys(data), k => data[k]);
+        this.memberData = Array.from(Object.keys(data), k => data[k]);
         
-        this.listBook = new MatTableDataSource(this.bookdata);
-        this.listBook.sort = this.sort;
-      this.listBook.paginator = this.paginator;
+      this.listMember = new MatTableDataSource(this.memberData);
+        this.listMember.sort = this.sort;
+        this.listMember.paginator = this.paginator;
       this.changeDetectorRefs.detectChanges();
       }
         
@@ -117,12 +118,12 @@ onSearchClear(){
 
   onClickUpdate(row, update_content) {
      this.modalService.open(update_content, { ariaLabelledBy: 'update_modal' });
-    this.saveUpdateBookForm.setValue(row);
+    this.saveUpdateMemberForm.setValue(row);
    
     
-    this.saveUpdateBookForm.patchValue({
-      published_date: formatDate(row.published_date, 'yyyy-MM-dd', 'en'),
-      received_date: formatDate(row.received_date, 'yyyy-MM-dd', 'en')
+    this.saveUpdateMemberForm.patchValue({
+      registered_date: formatDate(row.registered_date, 'yyyy-MM-dd', 'en'),
+     
     });
 
     
@@ -137,7 +138,7 @@ onSearchClear(){
   this.modalService.open(create_content, { ariaLabelledBy: 'create_modal' });
 }
     onModalClose() {
-    this.saveUpdateBookForm.reset();
+    this.saveUpdateMemberForm.reset();
     
   }
 
@@ -146,10 +147,10 @@ onSearchClear(){
   
   onSave() {
     
-    this.bookService.saveBook(this.saveUpdateBookForm.value).subscribe(
+    this.memberService.saveMember(this.saveUpdateMemberForm.value).subscribe(
       response => {
-        this.refreshTable(), this.saveUpdateBookForm.reset(),
-          this.snackBar.open('Book Created Successfully !!!', '::', {
+        this.refreshTable(), this.saveUpdateMemberForm.reset(),
+          this.snackBar.open('Member Created Successfully !!!', '::', {
           duration: 5000,
           horizontalPosition: 'right',
           verticalPosition: 'bottom',
@@ -168,7 +169,7 @@ onSearchClear(){
         }
 
  if (error.error.statusCode == 404) {
-          this.snackBar.open('This Book has been already in Database !!!', '::', {
+          this.snackBar.open('This Member has been already in Database !!!', '::', {
             duration: 5000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
@@ -188,10 +189,10 @@ onSearchClear(){
 
 onUpdate() {
    
-  this.bookService.updateBook(this.saveUpdateBookForm.value, this.saveUpdateBookForm.controls['id'].value).subscribe(
+  this.memberService.updateMember(this.saveUpdateMemberForm.value, this.saveUpdateMemberForm.controls['id'].value).subscribe(
     response => {
-      this.refreshTable(),this.saveUpdateBookForm.reset(),this.modalService.dismissAll(),
-      this.snackBar.open('Book Updated Successfully !!!', '::', {
+      this.refreshTable(),this.saveUpdateMemberForm.reset(),this.modalService.dismissAll(),
+      this.snackBar.open('Member Updated Successfully !!!', '::', {
           duration: 5000,
           horizontalPosition: 'right',
           verticalPosition: 'bottom',
@@ -218,10 +219,10 @@ onUpdate() {
   }
 
   onDelete() {
-    this.bookService.deleteBook(this.deleteRowId).subscribe(
+    this.memberService.deleteMember(this.deleteRowId).subscribe(
       response => {
         this.refreshTable(),
-      this.snackBar.open('Book Deleted Successfully !!!', '::', {
+      this.snackBar.open('Member Deleted Successfully !!!', '::', {
           duration: 5000,
           horizontalPosition: 'right',
           verticalPosition: 'bottom',
@@ -236,9 +237,8 @@ onUpdate() {
 
   
   onClear() {
-   this.saveUpdateBookForm.reset();
+   this.saveUpdateMemberForm.reset();
  }
 
-  
 
 }

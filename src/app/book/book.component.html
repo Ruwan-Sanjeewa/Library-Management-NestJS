@@ -1,115 +1,122 @@
+<main-nav>
 
-<main-nav >
- 
-  <div class="container-fluid">
-      <div class="row nav" >
-        
-  <div class="col-lg-12 col-md-12">
-    <div class="search-div">
-        <button mat-raised-button data-toggle="modal" data-target="#create_modal">
-            <mat-icon>add</mat-icon>Create
-        </button>
-        <mat-form-field class="search-form-field" floatLabel="never">
-            <input matInput [(ngModel)]="searchKey" placeholder="Search" autocmplete="off" (keyup)="applyFilter()">
-            <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()" >
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-form-field>
-    </div>
-  
+    <div class="container-fluid">
+        <div class="row nav">
 
-  <div class="mat-elevation-z8 col-lg-12 col-md-12 col-sm-12">
-      <mat-table matTableExporter  [dataSource]="listBook" matSort #exporter="matTableExporter">
-          <ng-container matColumnDef="id">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>NAME</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="writer">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>WRITER</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.writer}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="category">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>CATEGORY</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.category}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="published_date">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>PUBLISHED DATE</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.published_date}}</mat-cell>
-            </ng-container>
-      
-            <ng-container matColumnDef="publisher_name">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>PUBLISHER NAME</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.publisher_name}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="received_way">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>RECEIVED WAY</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.received_way}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="received_date">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>RECEIVED DATE</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.received_date}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="status">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>STATUS</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.status}}</mat-cell>
-            </ng-container>
-            
-            <ng-container matColumnDef="price">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>PRICE</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.price}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="action">
-                <mat-header-cell *matHeaderCellDef>ACTION</mat-header-cell>
-                <mat-cell *matCellDef="let row">
-                    <button mat-icon-button data-toggle="modal" data-target="#update_modal" (click)="onClickUpdate(row)"><mat-icon>launch</mat-icon></button>
-                    <button mat-icon-button color="warn"><mat-icon>delete_outline</mat-icon></button>
-                </mat-cell>
-            </ng-container>
-            
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-      <mat-paginator [pageSizeOptions] = "[5,10,25,100]" pageSize="5" showFirstLastOptions></mat-paginator>
-    </div>
-    
-    </div>
-    
-  </div>
-
-  <div class="row nav">
-      <div class="col-lg-6 col-md-10 col-sm-10">
-    <button mat-raised-button color="warn" (click)="exporter.exportTable('xlsx')" class="dwn">Download Data</button>
-    </div>
-  </div>
-</div>
+            <div class="col-lg-12 col-md-12">
+                <div class="search-div">
+                    <button mat-raised-button (click)="onClickCreate(create_content)">
+                        <mat-icon>add</mat-icon>Create
+                    </button>
+                    <mat-form-field class="search-form-field" floatLabel="never">
+                        <input matInput [(ngModel)]="searchKey" placeholder="Search" autocmplete="off"
+                            (keyup)="applyFilter()">
+                        <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey"
+                            (click)="onSearchClear()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
 
 
-<!-- create modal -->
-<div class="modal fade " id="create_modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="create_modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Create Book</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <div class="mat-elevation-z8 col-lg-12 col-md-12 col-sm-12">
+                    <mat-table matTableExporter [dataSource]="listBook" matSort #exporter="matTableExporter" >
+                        <ng-container matColumnDef="id">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="name">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>NAME</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="writer">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>WRITER</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.writer}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="category">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>CATEGORY</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.category}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="published_date">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>PUBLISHED DATE</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.published_date}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="publisher_name">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>PUBLISHER NAME</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.publisher_name}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="received_way">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>RECEIVED WAY</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.received_way}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="received_date">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>RECEIVED DATE</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.received_date}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>STATUS</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.status}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="price">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>PRICE</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.price}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <mat-header-cell *matHeaderCellDef>ACTION</mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <button mat-icon-button
+                                    (click)="onClickUpdate(row,update_content)">
+                                    <mat-icon>launch</mat-icon>
+                                </button>
+                                <button mat-icon-button color="warn" (click)="onClickDelete(row,delete_content)">
+                                    <mat-icon>delete_outline</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+                    <mat-paginator [pageSizeOptions]="[5,10,25,100]" pageSize="5" showFirstLastOptions></mat-paginator>
+                </div>
+
             </div>
-            <div class="modal-body">
-        <form  [formGroup]="saveUpdateBookForm" (ngSubmit)="onSave()">
+
+        </div>
+
+        <div class="row nav">
+            <div class="col-lg-6 col-md-10 col-sm-10">
+                <button mat-raised-button color="warn" (click)="exporter.exportTable('xlsx')" class="dwn">Download
+                    Data</button>
+            </div>
+        </div>
+    </div>
+
+
+
+<!-- ngb-create_modal -->
+    <ng-template #create_content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="create_modal">Create Book</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()" (click)="onModalClose()">
+    
+            </button>
+        </div>
+        <div class="modal-body">
+        <form [formGroup]="saveUpdateBookForm" (ngSubmit)="onSave()">
             <div class="row mb-3">
                 <div class="col ">
-                    <input type="text" class="form-control" placeholder="Book ID" formControlName="id">
+                    <input type="text" autofocus class="form-control" placeholder="Book ID" formControlName="id" ngbAutofocus>
                 </div>
                 <div class="col ">
                     <input type="text" class="form-control" placeholder="Name" formControlName="name">
@@ -123,18 +130,18 @@
                     <input type="number" class="form-control" placeholder="Price" formControlName="price">
                 </div>
             </div>
-
+        
             <div class="row mb-3">
                 <div class="col ">
-                    
+        
                     <input type="text" class="form-control" placeholder="Publisher Name" formControlName="publisher_name">
                 </div>
                 <div class="col ">
                     <input type="text" class="form-control" placeholder="Received Way" formControlName="received_way">
-                    
+        
                 </div>
             </div>
-
+        
             <div class="row mb-3">
                 <div class="col ">
                     <label>Published Date</label>
@@ -142,93 +149,124 @@
                 </div>
                 <div class="col ">
                     <label>Received Date</label>
-                    <input type="date" class="form-control" formControlName="received_date" >
+                    <input type="date" class="form-control" formControlName="received_date">
                 </div>
             </div>
-
+        
             <div class="row mb-3">
                 <div class="col ">
-                    <input type="text"  formControlName="category" class="form-control" placeholder="Category" >
+                    <input type="text" formControlName="category" class="form-control" placeholder="Category">
                 </div>
-                <div class="col ">
-                    <button mat-raised-button color="primary" style="width: 100%;" type="submit" >CREATE</button>
+                <div class="col">
+        
+                    <button mat-raised-button color="primary" type="submit">CREATE</button>
+                    <button mat-raised-button type="button" class="clr_btn" (click)="onClear()">CLEAR</button>
+        
                 </div>
             </div>
+        
         </form>
+        </div>
+       
+    </ng-template>
+
+  
+    <!-- ngb-update_modal -->
+    <ng-template #update_content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="update_modal">Update Book</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()" (click)="onModalClose()">
+
+        </button>
+    </div>
+    <div class="modal-body">
+    <form [formGroup]="saveUpdateBookForm" (ngSubmit)="onUpdate()">
+        <div class="row mb-3">
+            <div class="col ">
+                <label>Book ID</label>
+                <input type="text" class="form-control" formControlName="id" disabled>
             </div>
+            <div class="col ">
+                <label>Name</label>
+                <input type="text" class="form-control" formControlName="name" ngbAutofocus>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col ">
+                <label>Writer</label>
+                <input type="text" class="form-control" formControlName="writer">
+            </div>
+            <div class="col ">
+                <label>Price</label>
+                <input type="number" class="form-control" formControlName="price">
+            </div>
+        </div>
+    
+        <div class="row mb-3">
+            <div class="col ">
+                <label>Publisher Name</label>
+                <input type="text" class="form-control" formControlName="publisher_name">
+            </div>
+            <div class="col ">
+                <label>Received Way</label>
+                <input type="text" class="form-control" formControlName="received_way">
+    
+            </div>
+        </div>
+    
+        <div class="row mb-3">
+            <div class="col ">
+                <label>Published Date</label>
+                <input type="date" class="form-control" formControlName="published_date">
+            </div>
+            <div class="col ">
+                <label>Received Date</label>
+                <input type="date" class="form-control" formControlName="received_date">
+            </div>
+        </div>
+    
+        <div class="row mb-3">
+            <div class="col ">
+                <label>Category</label>
+                <input type="text" formControlName="category" class="form-control">
+            </div>
+            <div class="col ">
+                <label>Status</label>
+                <input type="text" formControlName="status" class="form-control" disabled>
+            </div>
+    
+        </div>
+    
+        <div class="row mb-3">
+            <div class="col ">
+    
+                <button mat-raised-button color="primary" style="width: 100%;" type="submit" >UPDATE</button>
+            </div>
+        </div>
+    </form>
+
+    </div>
+   
+</ng-template>
+
+ 
+<!-- ngb-delete_modal -->
+    <ng-template #delete_content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="delete_modal">Delete Book</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()" (click)="onModalClose()">
+                
+            </button>
+        </div>
+        <div class="modal-body">
+            If you delete this book, it will also delete all reocrds in lending about this book. Are you sure you want to delete
+            this book?
+        </div>
+        <div class="modal-footer">
             
+            <button type="button" class="btn btn-danger" (click)="onDelete()" (click)="modal.close()">Yes</button>
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()"  ngbAutofocus>No</button>
         </div>
-    </div>
-</div>
-
-
-<!-- update modal -->
-<div class="modal fade " id="update_modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="update_modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Update Book</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="saveUpdateBookForm" (ngSubmit)="onUpdate()">
-                    <div class="row mb-3">
-                        <div class="col ">
-                            <input type="text" class="form-control" placeholder="Book ID" formControlName="id">
-                        </div>
-                        <div class="col ">
-                            <input type="text" class="form-control" placeholder="Name" formControlName="name">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col ">
-                            <input type="text" class="form-control" placeholder="Writer" formControlName="writer">
-                        </div>
-                        <div class="col ">
-                            <input type="number" class="form-control" placeholder="Price" formControlName="price">
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col ">
-
-                            <input type="text" class="form-control" placeholder="Publisher Name"
-                                formControlName="publisher_name">
-                        </div>
-                        <div class="col ">
-                            <input type="text" class="form-control" placeholder="Received Way"
-                                formControlName="received_way">
-
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col ">
-                            <label>Published Date</label>
-                            <input type="date" class="form-control" formControlName="published_date">
-                        </div>
-                        <div class="col ">
-                            <label>Received Date</label>
-                            <input type="date" class="form-control" formControlName="received_date">
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col ">
-                            <input type="text" formControlName="category" class="form-control" placeholder="Category">
-                        </div>
-                        <div class="col ">
-                            <button mat-raised-button color="primary" style="width: 100%;" type="submit">UPDATE</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-
+    </ng-template>
 
 </main-nav>
-
