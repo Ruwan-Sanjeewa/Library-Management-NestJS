@@ -34,41 +34,38 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
   
-    if (this.loginForm.invalid){
+    if (this.loginForm.invalid) {
+         this.snackBar.open('All fields must be filled !!!', ' ',{
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+            panelClass: 'login'
+         });
+      
       return;
     }
 
     this.loginservice.authenticate(this.loginForm.value).pipe(
       map(token => this.router.navigate(['home']))
     ).subscribe(
-      data => console.log(data),
+      data => console.log("success"),
       error => {
-    
-          this.snackBar.open('Invalid Credentials', '', {
+   
+        if (error.error.statusCode == 401) {
+         this.snackBar.open('Invalid Credentials !!!', '', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'bottom',
-            panelClass: 'error'
+            panelClass: 'login'
           });
-      
-
-          
-      
-      
-      
       }
+
+    }
       )
     
   }
 
-  errorHandling(error:string){
-  
-   console.log(error);
 
-   if(error ==="401" || error ==="400"){
-     
-   }
-  }
 
 
 }

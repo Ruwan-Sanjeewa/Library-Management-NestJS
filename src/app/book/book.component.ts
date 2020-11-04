@@ -5,6 +5,7 @@ import {  FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 @Component({
   selector: 'book',
   templateUrl: './book.component.html',
@@ -14,7 +15,7 @@ export class BookComponent implements OnInit {
 
   
   constructor(private bookService: BookService, private changeDetectorRefs: ChangeDetectorRef,
-     private snackBar:MatSnackBar,private modalService: NgbModal) { }
+     private snackBar:MatSnackBar,private modalService: NgbModal,private router:Router) { }
 
   public bookdata = [];
   
@@ -83,7 +84,16 @@ this.saveUpdateBookForm =new FormGroup({
         this.listBook = new MatTableDataSource(this.bookdata);
         this.listBook.sort = this.sort;
         this.listBook.paginator = this.paginator;
+      },
+
+      (error) => {
+         if (error.error.statusCode == 401) {
+          this.modalService.dismissAll();
+          this.router.navigate(['login']);
+        }
       }
+
+
         
     )
       
@@ -158,6 +168,11 @@ onSearchClear(){
          
       },
       error => {
+        if (error.error.statusCode == 401) {
+          this.modalService.dismissAll();
+          this.router.navigate(['login']);
+        }
+
         if (error.error.statusCode == 400) {
           this.snackBar.open('All fields must be filled !!!', '::', {
             duration: 5000,
@@ -201,6 +216,12 @@ onUpdate() {
      
     },
     error => { 
+
+           if (error.error.statusCode == 401) {
+          this.modalService.dismissAll();
+          this.router.navigate(['login']);
+        }
+
           if (error.error.statusCode == 400) {
           this.snackBar.open('All fields must be filled !!!', '::', {
             duration: 5000,
@@ -228,7 +249,12 @@ onUpdate() {
           panelClass:'success'
       });
        },
-      error => {}
+      error => {
+         if (error.error.statusCode == 401) {
+          this.modalService.dismissAll();
+          this.router.navigate(['login']);
+        }
+      }
     )
   }
 

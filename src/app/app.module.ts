@@ -29,6 +29,10 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import {NgbPaginationModule, NgbAlertModule,NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import { MemberComponent } from './member/member.component';
 import { MemberService } from './member/member.service';
+import { HomeService } from './home/home.service';
+import { AuthGaurdService } from './auth-guard.service';
+import { LoginService } from './login/login.service';
+import { RoleGuardService } from './role-guard.service';
 
 
 @NgModule({
@@ -65,7 +69,7 @@ import { MemberService } from './member/member.service';
     MatSnackBarModule,
  NgbPaginationModule, NgbAlertModule,NgbModalModule.forRoot()
   ],
-  providers: [BookService,MemberService],
+  providers: [BookService,MemberService,HomeService,AuthGaurdService,LoginService,RoleGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

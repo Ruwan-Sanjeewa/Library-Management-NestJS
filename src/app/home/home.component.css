@@ -93,7 +93,8 @@
     position: absolute;
     top: -10px;
     right: 30px;
-    font-size: 8em;
+    font-size: 3em;
+    margin-top: 50px;
     color:rgba(255,255,255,0.05);
 }
 

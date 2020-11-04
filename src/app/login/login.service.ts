@@ -15,18 +15,9 @@ export class LoginService{
     }
 
     authenticate(user:User){
-       
-        // return this.http.post<any>("http://localhost:3000/auth/signin",{username:user.username,password:user.password}).pipe(
-        //     map((token) =>{
-        //         console.log(token);
-        //         localStorage.setItem('blog-token', token.access_token);
-        //         return token;
-        //     } )
-        // )
-
-        return this.http.post<any>("http://localhost:3000/auth/signin",{username:user.username,password:user.password}).pipe(
+         return this.http.post<any>("http://localhost:3000/auth/signin",{username:user.username,password:user.password}).pipe(
             map((token) =>{
-                console.log(user.username, user.password);
+                
                 localStorage.setItem('blog-token', token.accessToken);
                 return token;
             } )
