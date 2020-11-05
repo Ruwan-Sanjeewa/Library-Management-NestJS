@@ -14,12 +14,17 @@ export class LoginService{
         
     }
 
+  
+
     authenticate(user:User){
          return this.http.post<any>("http://localhost:3000/auth/signin",{username:user.username,password:user.password}).pipe(
-            map((token) =>{
+            map((data) =>{
                 
-                localStorage.setItem('blog-token', token.accessToken);
-                return token;
+                localStorage.setItem('blog-token', data.accessToken);
+                localStorage.setItem('role', data.role);
+                
+                
+                return data;
             } )
         )
 
@@ -32,5 +37,6 @@ export class LoginService{
         return !(user === null);
     }
 
+    
 
 }
