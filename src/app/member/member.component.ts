@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { MemberService } from './member.service';
 
@@ -13,7 +14,7 @@ import { MemberService } from './member.service';
 export class MemberComponent implements OnInit {
 
  constructor(private memberService: MemberService, private changeDetectorRefs: ChangeDetectorRef,
-     private snackBar:MatSnackBar,private modalService: NgbModal) { }
+     private snackBar:MatSnackBar,private modalService: NgbModal,private router:Router) { }
 
   public memberData = [];
   
@@ -84,6 +85,13 @@ this.saveUpdateMemberForm =new FormGroup({
         this.listMember = new MatTableDataSource(this.memberData);
         this.listMember.sort = this.sort;
         this.listMember.paginator = this.paginator;
+      },
+      (error) => {
+             if (error.error.statusCode == 401) {
+          this.modalService.dismissAll();
+             this.router.navigate(['login']);
+              localStorage.clear();
+        }
       }
         
     )
@@ -117,7 +125,7 @@ onSearchClear(){
   }
 
   onClickUpdate(row, update_content) {
-     this.modalService.open(update_content, { ariaLabelledBy: 'update_modal' });
+     this.modalService.open(update_content, { ariaLabelledBy: 'update_modal',backdrop:'static' });
     this.saveUpdateMemberForm.setValue(row);
    
     
@@ -130,12 +138,12 @@ onSearchClear(){
   }
 
   onClickDelete(row,delete_content) {
-    this.modalService.open(delete_content, { ariaLabelledBy: 'delete_modal' });
+    this.modalService.open(delete_content, { ariaLabelledBy: 'delete_modal' ,backdrop:'static'});
     this.deleteRowId = row.id;
   }
 
   onClickCreate(create_content) {
-  this.modalService.open(create_content, { ariaLabelledBy: 'create_modal' });
+  this.modalService.open(create_content, { ariaLabelledBy: 'create_modal' ,backdrop:'static'});
 }
     onModalClose() {
     this.saveUpdateMemberForm.reset();
@@ -159,6 +167,16 @@ onSearchClear(){
          
       },
       error => {
+
+             if (error.error.statusCode == 401) {
+          this.modalService.dismissAll();
+             this.router.navigate(['login']);
+              localStorage.clear();
+        }
+
+
+
+
         if (error.error.statusCode == 400) {
           this.snackBar.open('All fields must be filled !!!', '::', {
             duration: 5000,
@@ -168,7 +186,7 @@ onSearchClear(){
           });
         }
 
- if (error.error.statusCode == 404) {
+ if (error.error.statusCode == 409) {
           this.snackBar.open('This Member has been already in Database !!!', '::', {
             duration: 5000,
             horizontalPosition: 'right',
@@ -202,6 +220,13 @@ onUpdate() {
      
     },
     error => { 
+
+             if (error.error.statusCode == 401) {
+          this.modalService.dismissAll();
+             this.router.navigate(['login']);
+              localStorage.clear();
+        }
+
           if (error.error.statusCode == 400) {
           this.snackBar.open('All fields must be filled !!!', '::', {
             duration: 5000,
@@ -229,7 +254,14 @@ onUpdate() {
           panelClass:'success'
       });
        },
-      error => {}
+      error => {
+
+             if (error.error.statusCode == 401) {
+          this.modalService.dismissAll();
+             this.router.navigate(['login']);
+              localStorage.clear();
+        }
+      }
     )
   }
 

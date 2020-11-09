@@ -19,7 +19,13 @@ const routes: Routes = [
       expectedRole:'admin'
     }
   },
-  { path: 'home', component: HomeComponent,canActivate:[AuthGuard] },
+
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+
   {
     path: 'member',
     component: MemberComponent,

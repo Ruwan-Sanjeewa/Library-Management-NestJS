@@ -89,7 +89,8 @@ this.saveUpdateBookForm =new FormGroup({
       (error) => {
          if (error.error.statusCode == 401) {
           this.modalService.dismissAll();
-          this.router.navigate(['login']);
+           this.router.navigate(['login']);
+           localStorage.clear();
         }
       }
 
@@ -126,7 +127,7 @@ onSearchClear(){
   }
 
   onClickUpdate(row, update_content) {
-     this.modalService.open(update_content, { ariaLabelledBy: 'update_modal' });
+     this.modalService.open(update_content, { ariaLabelledBy: 'update_modal' ,backdrop:'static'});
     this.saveUpdateBookForm.setValue(row);
    
     
@@ -139,12 +140,12 @@ onSearchClear(){
   }
 
   onClickDelete(row,delete_content) {
-    this.modalService.open(delete_content, { ariaLabelledBy: 'delete_modal' });
+    this.modalService.open(delete_content, { ariaLabelledBy: 'delete_modal' ,backdrop:'static' });
     this.deleteRowId = row.id;
   }
 
   onClickCreate(create_content) {
-  this.modalService.open(create_content, { ariaLabelledBy: 'create_modal' });
+  this.modalService.open(create_content, { ariaLabelledBy: 'create_modal' ,backdrop:'static'});
 }
     onModalClose() {
     this.saveUpdateBookForm.reset();
@@ -171,6 +172,7 @@ onSearchClear(){
         if (error.error.statusCode == 401) {
           this.modalService.dismissAll();
           this.router.navigate(['login']);
+           localStorage.clear();
         }
 
         if (error.error.statusCode == 400) {
@@ -182,7 +184,7 @@ onSearchClear(){
           });
         }
 
- if (error.error.statusCode == 404) {
+ if (error.error.statusCode == 409) {
           this.snackBar.open('This Book has been already in Database !!!', '::', {
             duration: 5000,
             horizontalPosition: 'right',
@@ -219,7 +221,8 @@ onUpdate() {
 
            if (error.error.statusCode == 401) {
           this.modalService.dismissAll();
-          this.router.navigate(['login']);
+             this.router.navigate(['login']);
+              localStorage.clear();
         }
 
           if (error.error.statusCode == 400) {
@@ -252,7 +255,8 @@ onUpdate() {
       error => {
          if (error.error.statusCode == 401) {
           this.modalService.dismissAll();
-          this.router.navigate(['login']);
+           this.router.navigate(['login']);
+            localStorage.clear();
         }
       }
     )

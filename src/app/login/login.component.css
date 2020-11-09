@@ -84,3 +84,9 @@
        color: #555;
        font-size: 18px;
 }
+
+.showHideIcon{
+    position: absolute;
+    left: 78%;
+    top:58%!important;
+}

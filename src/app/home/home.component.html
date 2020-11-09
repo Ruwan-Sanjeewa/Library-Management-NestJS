@@ -4,7 +4,7 @@
             <div class="card" >
                 <div class="box">
                     <div class="content">
-                        <h2>{{bookCount}}</h2>
+                        <h2 data-placement="top" title="Books Count" style="cursor: pointer;">{{bookCount}}</h2>
                         <h3>Books</h3>
                         <p>You can add, edit, delete and view all books details from this section</p>
                         <a routerLink="/book">View More</a>
@@ -15,10 +15,10 @@
             <div class="card">
                 <div class="box">
                     <div class="content">
-                        <h2>{{memberCount}}</h2>
+                        <h2 data-toggle="tooltip" data-placement="top" title="Memebers Count" style="cursor: pointer;">{{memberCount}}</h2>
                         <h3>Members</h3>
                         <p>You can add, edit, delete and view all Members details from this section</p>
-                        <a routerLink="/book">View More</a>
+                        <a routerLink="/member">View More</a>
                     </div>
                 </div>
             </div>
@@ -36,6 +36,24 @@
         </div>
 
     </div>
+
+    <!-- logout-modal
+    <ng-template #logout_content let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="logout_modal">Unauthorized Action</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()" (click)="onModalClose()">
+    
+            </button>
+        </div>
+        <div class="modal-body">
+            Admin users can only view this section. If you want to view this section please logout and login again from a admin user account.
+        </div>
+        <div class="modal-footer">
+    
+            <button type="button" class="btn btn-danger" (click)="onLogOut()" (click)="modal.close()">Yes</button>
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" ngbAutofocus>No</button>
+        </div>
+    </ng-template> -->
 
 
 </main-nav>

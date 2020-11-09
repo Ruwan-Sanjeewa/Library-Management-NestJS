@@ -9,10 +9,13 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class LoginService{
+    
+
 
     constructor(private http:HttpClient){
         
     }
+
 
   
 
@@ -22,7 +25,9 @@ export class LoginService{
                 
                 localStorage.setItem('blog-token', data.accessToken);
                 localStorage.setItem('role', data.role);
+                localStorage.setItem('username', data.username);
                 
+
                 
                 return data;
             } )
@@ -37,6 +42,7 @@ export class LoginService{
         return !(user === null);
     }
 
+   
     
 
 }

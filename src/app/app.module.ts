@@ -33,6 +33,8 @@ import { HomeService } from './home/home.service';
 import { AuthGaurdService } from './auth-guard.service';
 import { LoginService } from './login/login.service';
 import { RoleGuardService } from './role-guard.service';
+import { UserComponent } from './user/user.component';
+import { UserService } from './user/user.service';
 
 
 @NgModule({
@@ -43,6 +45,7 @@ import { RoleGuardService } from './role-guard.service';
     HomeComponent,
     MainNavComponent,
     MemberComponent,
+    UserComponent,
     
     
   ],
@@ -69,7 +72,7 @@ import { RoleGuardService } from './role-guard.service';
     MatSnackBarModule,
  NgbPaginationModule, NgbAlertModule,NgbModalModule.forRoot()
   ],
-  providers: [BookService,MemberService,HomeService,AuthGaurdService,LoginService,RoleGuardService],
+  providers: [BookService,MemberService,HomeService,AuthGaurdService,LoginService,RoleGuardService,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

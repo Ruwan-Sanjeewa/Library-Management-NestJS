@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'main-nav',
@@ -7,9 +10,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainNavComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: NgbModal,private router:Router) { }
 
+  username: string;
+  
   ngOnInit() {
+    this.username = localStorage.getItem('username');
+    
+
+  }
+
+
+  onLogout() {
+   
+    localStorage.clear();
+    this.router.navigate(['login'])
+  }
+  
+  onClickLogout(logout_content) {
+     this.modalService.open(logout_content, { ariaLabelledBy:'logout_modal',backdrop:'static'});
   }
 
 }

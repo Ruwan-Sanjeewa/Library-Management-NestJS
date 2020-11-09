@@ -1,7 +1,13 @@
-.mat-button-focus-overlay {
-    background-color: transparent!important;
+
+
+.logoutIcon{
+    font-size: 22px;
+   vertical-align: middle;
+   cursor: pointer;
+  
 }
 
-button:focus {
-    outline: none;
+.username{
+    cursor: pointer;
 }
+

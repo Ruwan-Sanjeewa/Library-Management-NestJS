@@ -96,7 +96,7 @@
 
         <div class="row nav">
             <div class="col-lg-6 col-md-10 col-sm-10">
-                <button mat-raised-button color="warn" (click)="exporter.exportTable('xlsx')" class="dwn">Download
+                <button mat-raised-button color="warn" (click)="exporter.exportTable('xlsx')" class="dwn"><mat-icon>get_app</mat-icon> Download
                     Data</button>
             </div>
         </div>
@@ -105,8 +105,8 @@
 
 
 <!-- ngb-create_modal -->
-    <ng-template #create_content let-modal>
-        <div class="modal-header">
+    <ng-template #create_content let-modal >
+        <div class="modal-header" >
             <h4 class="modal-title" id="create_modal">Create Book</h4>
             <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()" (click)="onModalClose()">
     
@@ -127,7 +127,7 @@
                     <input type="text" class="form-control" placeholder="Writer" formControlName="writer">
                 </div>
                 <div class="col ">
-                    <input type="number" class="form-control" placeholder="Price" formControlName="price">
+                    <input type="number" class="form-control" placeholder="Price" formControlName="price" step=".01" min="0" >
                 </div>
             </div>
         
@@ -184,7 +184,7 @@
         <div class="row mb-3">
             <div class="col ">
                 <label>Book ID</label>
-                <input type="text" class="form-control" formControlName="id" disabled>
+                <input type="text" class="form-control" formControlName="id"  disabled>
             </div>
             <div class="col ">
                 <label>Name</label>
@@ -198,7 +198,7 @@
             </div>
             <div class="col ">
                 <label>Price</label>
-                <input type="number" class="form-control" formControlName="price">
+                <input type="number" class="form-control" formControlName="price" step=".01" min="0" value="0">
             </div>
         </div>
     
