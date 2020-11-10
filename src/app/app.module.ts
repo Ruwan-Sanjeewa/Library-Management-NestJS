@@ -35,6 +35,8 @@ import { LoginService } from './login/login.service';
 import { RoleGuardService } from './role-guard.service';
 import { UserComponent } from './user/user.component';
 import { UserService } from './user/user.service';
+import { LendComponent } from './lend/lend.component';
+import { LendService } from './lend/lend.service';
 
 
 @NgModule({
@@ -46,6 +48,7 @@ import { UserService } from './user/user.service';
     MainNavComponent,
     MemberComponent,
     UserComponent,
+    LendComponent,
     
     
   ],
@@ -72,7 +75,7 @@ import { UserService } from './user/user.service';
     MatSnackBarModule,
  NgbPaginationModule, NgbAlertModule,NgbModalModule.forRoot()
   ],
-  providers: [BookService,MemberService,HomeService,AuthGaurdService,LoginService,RoleGuardService,UserService],
+  providers: [BookService,MemberService,HomeService,AuthGaurdService,LoginService,RoleGuardService,UserService,LendService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

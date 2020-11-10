@@ -6,6 +6,8 @@ import { BookComponent } from './book/book.component';
 import { HomeComponent } from './home/home.component';
 import { MemberComponent } from './member/member.component';
 import { RoleGuardService as RoleGuard, RoleGuardService} from './role-guard.service';
+import { LendComponent } from './lend/lend.component';
+import { UserComponent } from './user/user.component';
 
 
 const routes: Routes = [
@@ -14,10 +16,8 @@ const routes: Routes = [
   {
     path: 'book',
     component: BookComponent,
-    canActivate: [RoleGuard],
-    data: {
-      expectedRole:'admin'
-    }
+    canActivate: [AuthGuard],
+   
   },
 
   {
@@ -29,11 +29,23 @@ const routes: Routes = [
   {
     path: 'member',
     component: MemberComponent,
-    canActivate: [RoleGuard],
-    data: {
-      expectedRole:'admin'
-    }
+    canActivate: [AuthGuard],
+   
   },
+
+  {
+    path: 'lend',
+    component: LendComponent,
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'user',
+    component: UserComponent,
+    canActivate: [AuthGuard]
+  }
+
+
  
 ];
 

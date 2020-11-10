@@ -127,25 +127,60 @@ onSearchClear(){
   }
 
   onClickUpdate(row, update_content) {
-     this.modalService.open(update_content, { ariaLabelledBy: 'update_modal' ,backdrop:'static'});
-    this.saveUpdateBookForm.setValue(row);
-   
-    
-    this.saveUpdateBookForm.patchValue({
-      published_date: formatDate(row.published_date, 'yyyy-MM-dd', 'en'),
-      received_date: formatDate(row.received_date, 'yyyy-MM-dd', 'en')
-    });
+    if (localStorage.getItem('role') == "user") {
+        this.snackBar.open('Unauhorized : Admin users can only perform this action', '::', {
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+            panelClass: 'error'
+          });
+    }
 
-    
+    if (localStorage.getItem('role') == "admin" || localStorage.getItem('role') == "superadmin") {
+      this.modalService.open(update_content, { ariaLabelledBy: 'update_modal' ,backdrop:'static'});
+        this.saveUpdateBookForm.setValue(row);
+      
+        
+        this.saveUpdateBookForm.patchValue({
+          published_date: formatDate(row.published_date, 'yyyy-MM-dd', 'en'),
+          received_date: formatDate(row.received_date, 'yyyy-MM-dd', 'en')
+        });
+    }
   }
 
-  onClickDelete(row,delete_content) {
-    this.modalService.open(delete_content, { ariaLabelledBy: 'delete_modal' ,backdrop:'static' });
+  onClickDelete(row, delete_content) {
+    if (localStorage.getItem('role') == "user") {
+        this.snackBar.open('Unauhorized : Admin users can only perform this action', '::', {
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+            panelClass: 'error'
+          });
+    }
+
+    if (localStorage.getItem('role') == "admin" || localStorage.getItem('role') == "superadmin") {
+       this.modalService.open(delete_content, { ariaLabelledBy: 'delete_modal' ,backdrop:'static' });
     this.deleteRowId = row.id;
+    }
+    
+   
   }
 
   onClickCreate(create_content) {
-  this.modalService.open(create_content, { ariaLabelledBy: 'create_modal' ,backdrop:'static'});
+
+    if (localStorage.getItem('role') == "user") {
+       this.snackBar.open('Unauhorized : Admin users can only perform this action', '::', {
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom',
+            panelClass: 'error'
+          });
+    }
+
+    if (localStorage.getItem('role') == "admin" || localStorage.getItem('role') == "superadmin") {
+      this.modalService.open(create_content, { ariaLabelledBy: 'create_modal' ,backdrop:'static'});
+    }
+  
 }
     onModalClose() {
     this.saveUpdateBookForm.reset();
