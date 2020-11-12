@@ -4,9 +4,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-.body{
-  background: #ebf5fc !important;
-}
+
 
 
 .search-div{
@@ -78,4 +76,14 @@ input:focus {
 
 .closeIcon{
   font-size: large;
+}
+
+.hide{
+  display: none;
+}
+
+.mat-footer-row mat-footer-cell{
+  justify-content: center;
+  font-style: italic;
+  font-family: "Poppins", sans-serif !important;
 }

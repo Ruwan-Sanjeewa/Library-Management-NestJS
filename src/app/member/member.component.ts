@@ -199,9 +199,16 @@ onSearchClear(){
   onSave() {
     
     this.memberService.saveMember(this.saveUpdateMemberForm.value).subscribe(
-      response => {
-        this.refreshTable(), this.saveUpdateMemberForm.reset(),
-          this.snackBar.open('Member Created Successfully !!!', '::', {
+      data => {
+        this.memberData.push(data),
+        this.listMember = new MatTableDataSource(this.memberData);
+        this.listMember.sort = this.sort;
+        this.listMember.paginator = this.paginator;
+        this.changeDetectorRefs.detectChanges();
+        this.saveUpdateMemberForm.reset(),
+        this.modalService.dismissAll();
+          
+        this.snackBar.open('Member Created Successfully !!!', '::', {
           duration: 5000,
           horizontalPosition: 'right',
           verticalPosition: 'bottom',
@@ -251,8 +258,20 @@ onSearchClear(){
 onUpdate() {
    
   this.memberService.updateMember(this.saveUpdateMemberForm.value, this.saveUpdateMemberForm.controls['id'].value).subscribe(
-    response => {
-      this.refreshTable(),this.saveUpdateMemberForm.reset(),this.modalService.dismissAll(),
+    data => {
+      for (var i = 0; i < this.memberData.length; i++){
+          if (this.memberData[i].id == data.id) {
+            this.memberData[i] = data;
+            break;
+          }
+        }
+        this.listMember = new MatTableDataSource(this.memberData);
+          this.listMember.sort = this.sort;
+          this.listMember.paginator = this.paginator;
+          this.changeDetectorRefs.detectChanges();
+          this.saveUpdateMemberForm.reset();
+          this.modalService.dismissAll();
+     
       this.snackBar.open('Member Updated Successfully !!!', '::', {
           duration: 5000,
           horizontalPosition: 'right',
@@ -288,8 +307,21 @@ onUpdate() {
 
   onDelete() {
     this.memberService.deleteMember(this.deleteRowId).subscribe(
-      response => {
-        this.refreshTable(),
+      data => {
+        for (var i = 0; i < this.memberData.length; i++){
+          if (this.memberData[i].id == data.id) {
+            this.memberData.splice(i, 1);
+            break;
+          }
+        }
+        
+          this.listMember = new MatTableDataSource(this.memberData);
+          this.listMember.sort = this.sort;
+          this.listMember.paginator = this.paginator;
+          this.changeDetectorRefs.detectChanges();
+         
+        
+        
       this.snackBar.open('Member Deleted Successfully !!!', '::', {
           duration: 5000,
           horizontalPosition: 'right',

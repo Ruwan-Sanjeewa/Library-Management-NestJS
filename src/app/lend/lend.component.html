@@ -1,3 +1,106 @@
 <main-nav>
-  
+    <div class="container-fluid ">
+        <div class="row nav">
+    
+            <div class="col-lg-12 col-md-12">
+                <div class="search-div">
+                    <button mat-raised-button (click)="onClickCreate(create_content)">
+                        <mat-icon>add</mat-icon>Create
+                    </button>
+                    <mat-form-field class="search-form-field" floatLabel="never">
+                        <input matInput [(ngModel)]="searchKey" placeholder="Search" autocmplete="off"
+                            (keyup)="applyFilter()">
+                        <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey"
+                            (click)="onSearchClear()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+    
+    
+                <div class="mat-elevation-z8 col-lg-12 col-md-12 col-sm-12">
+                    <mat-table matTableExporter [dataSource]="listLend" matSort #exporter="matTableExporter">
+                        <ng-container matColumnDef="lend_id">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Lend ID</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.lend_id}}</mat-cell>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="lend_date">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Lend Date</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.lend_date}}</mat-cell>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="receiving_date">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Receiving Date</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.receiving_date}}</mat-cell>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="username">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Lended User</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.user.username}}</mat-cell>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="book_id">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Lended Book</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.books[0].id}}, {{element.books[1].id}}</mat-cell>
+                          
+                        </ng-container>
+    
+                        <ng-container matColumnDef="member_id">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Lended Member</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.member.id}}</mat-cell>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="lend_status">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Lend Status</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.status}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <mat-header-cell *matHeaderCellDef>ACTION</mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <button mat-icon-button (click)="onClickUpdate(row,update_content)">
+                                    <mat-icon>launch</mat-icon>
+                                </button>
+                                <button mat-icon-button color="warn" (click)="onClickDelete(row,delete_content)">
+                                    <mat-icon>delete_outline</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="loading">
+                            <mat-footer-cell *matFooterCellDef colspan="6">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </mat-footer-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="noData">
+                            <mat-footer-cell *matFooterCellDef colspan="6">
+                                No Data
+                            </mat-footer-cell>
+                        </ng-container>
+    
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listLend!=null}"></mat-footer-row>
+                        <mat-footer-row *matFooterRowDef="['noData']"
+                            [ngClass]="{'hide':! (listLend!=null && listLend.data.length == 0 )}"></mat-footer-row>
+                    </mat-table>
+                    <mat-paginator [pageSizeOptions]="[5,10,25,100]" pageSize="5" showFirstLastButtons></mat-paginator>
+                </div>
+    
+            </div>
+    
+        </div>
+    
+        <div class="row nav">
+            <div class="col-lg-6 col-md-10 col-sm-10">
+                <button mat-raised-button color="warn" (click)="exporter.exportTable('xlsx')" class="dwn">
+                    <mat-icon>get_app</mat-icon> Download
+                    Data
+                </button>
+            </div>
+    
+        </div>
+    </div>
 </main-nav>

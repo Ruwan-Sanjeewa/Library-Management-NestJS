@@ -1,7 +1,89 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
 
-*{
+* {
+  font-family: "Poppins", sans-serif;
+}
 
-    font-family: 'Poppins', sans-serif;
 
+
+
+.search-div{
+  margin-top: 70px;
+}
+
+.search-form-field{
+  width:60%;
+  padding-left: 10px;
+  padding:5px 10px ;
+  
+  border-radius:5px ;
+}
+.search-form-field div.mat-form-field-underline{
+  display: none;
+}
+
+.search-form-field div.mat-form-field-infix{
+  border-top: 0px;
+}
+
+.search-form-field div.mat-form-field-warpper{
+  padding-bottom: 0px;
+}
+
+.search-form-field div.mat-form-field-suffix button{
+  height: 32px;
+  width: 32px;
+}
+
+.dwn{
+ 
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 200px;
+  text-align: center;
+  padding: 4px;
+}
+
+.mat-button-focus-overlay {
+    background-color: transparent!important;
+}
+
+button:focus {
+    outline: none;
+}
+
+input:focus { 
+    outline: none !important;
+    border-color: none;
+    box-shadow: none;
+}
+
+.mat-icon-button ::ng-deep .mat-button-focus-overlay {
+    display: none;
+}
+
+.clr_btn{
+  margin-left:10px; 
+  background-color: green;
+  color:#fff;
+  width:75px;
+}
+
+.close{
+  background: transparent !important;
+  border: none !important;
+}
+
+.closeIcon{
+  font-size: large;
+}
+
+.hide{
+  display: none;
+}
+
+.mat-footer-row mat-footer-cell{
+  justify-content: center;
+  font-style: italic;
+  font-family: "Poppins", sans-serif !important;
 }

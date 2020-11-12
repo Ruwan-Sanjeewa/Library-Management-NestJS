@@ -80,8 +80,23 @@
               </mat-cell>
             </ng-container>
 
+            <ng-container matColumnDef="loading">
+              <mat-footer-cell *matFooterCellDef colspan="6">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </mat-footer-cell>
+            </ng-container>
+            <ng-container matColumnDef="noData">
+              <mat-footer-cell *matFooterCellDef colspan="6">
+                No Data
+              </mat-footer-cell>
+            </ng-container>
+
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listMember!=null}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':! (listMember!=null && listMember.data.length == 0)}"></mat-footer-row>
           </mat-table>
           <mat-paginator [pageSizeOptions]="[5,10,25,100]" pageSize="5" showFirstLastOptions></mat-paginator>
         </div>

@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BookService } from './book.service';
-import { MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSnackBar, MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import {  FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'book',
   templateUrl: './book.component.html',
@@ -25,11 +26,12 @@ export class BookComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  
   searchKey: string;
   saveUpdateBookForm:FormGroup;
   deleteRowId: string;
 
-
+ 
   ngOnInit() {
 
 this.saveUpdateBookForm =new FormGroup({
@@ -77,13 +79,21 @@ this.saveUpdateBookForm =new FormGroup({
     })
 
 
-    this.bookService.getAllBooks().subscribe(
+    this.getAllBooks();
+      
+  }
+
+  getAllBooks() {
+   this.bookService.getAllBooks().subscribe(
       (data) => {
         this.bookdata = Array.from(Object.keys(data), k => data[k]);
         
         this.listBook = new MatTableDataSource(this.bookdata);
+        
         this.listBook.sort = this.sort;
         this.listBook.paginator = this.paginator;
+        
+        
       },
 
       (error) => {
@@ -97,8 +107,8 @@ this.saveUpdateBookForm =new FormGroup({
 
         
     )
-      
-  }
+    
+ }
   
 onSearchClear(){
   this.searchKey = "";
@@ -112,19 +122,7 @@ onSearchClear(){
 }
 
   
-  refreshTable() {
-    this.bookService.getAllBooks().subscribe(
-      (data) => {
-        this.bookdata = Array.from(Object.keys(data), k => data[k]);
-        
-        this.listBook = new MatTableDataSource(this.bookdata);
-        this.listBook.sort = this.sort;
-      this.listBook.paginator = this.paginator;
-      this.changeDetectorRefs.detectChanges();
-      }
-        
-    )
-  }
+ 
 
   onClickUpdate(row, update_content) {
     if (localStorage.getItem('role') == "user") {
@@ -193,8 +191,15 @@ onSearchClear(){
   onSave() {
     
     this.bookService.saveBook(this.saveUpdateBookForm.value).subscribe(
-      response => {
-        this.refreshTable(), this.saveUpdateBookForm.reset(),
+      (data) => {
+          this.bookdata.push(data),
+          this.listBook = new MatTableDataSource(this.bookdata);
+          this.listBook.sort = this.sort;
+          this.listBook.paginator = this.paginator;
+          this.changeDetectorRefs.detectChanges();
+          this.saveUpdateBookForm.reset();
+          this.modalService.dismissAll();
+        
           this.snackBar.open('Book Created Successfully !!!', '::', {
           duration: 5000,
           horizontalPosition: 'right',
@@ -241,9 +246,21 @@ onSearchClear(){
 onUpdate() {
    
   this.bookService.updateBook(this.saveUpdateBookForm.value, this.saveUpdateBookForm.controls['id'].value).subscribe(
-    response => {
-      this.refreshTable(),this.saveUpdateBookForm.reset(),this.modalService.dismissAll(),
-      this.snackBar.open('Book Updated Successfully !!!', '::', {
+    data => {
+       for (var i = 0; i < this.bookdata.length; i++){
+          if (this.bookdata[i].id == data.id) {
+            this.bookdata[i] = data;
+            break;
+          }
+        }
+        this.listBook = new MatTableDataSource(this.bookdata);
+          this.listBook.sort = this.sort;
+          this.listBook.paginator = this.paginator;
+          this.changeDetectorRefs.detectChanges();
+          this.saveUpdateBookForm.reset();
+          this.modalService.dismissAll();
+     
+        this.snackBar.open('Book Updated Successfully !!!', '::', {
           duration: 5000,
           horizontalPosition: 'right',
           verticalPosition: 'bottom',
@@ -278,8 +295,21 @@ onUpdate() {
 
   onDelete() {
     this.bookService.deleteBook(this.deleteRowId).subscribe(
-      response => {
-        this.refreshTable(),
+      data => {
+       
+        for (var i = 0; i < this.bookdata.length; i++){
+          if (this.bookdata[i].id == data.id) {
+            this.bookdata.splice(i, 1);
+            break;
+          }
+        }
+        
+          this.listBook = new MatTableDataSource(this.bookdata);
+          this.listBook.sort = this.sort;
+          this.listBook.paginator = this.paginator;
+          this.changeDetectorRefs.detectChanges();
+  
+      
       this.snackBar.open('Book Deleted Successfully !!!', '::', {
           duration: 5000,
           horizontalPosition: 'right',
